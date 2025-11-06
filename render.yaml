@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: quizverse-static-site
+    env: static
+    repo: https://github.com/chittiproludakshayani/QuizVerse
+    branch: site-upload
+    plan: free
+    buildCommand: ""
+    startCommand: ""
+    staticPublishPath: "."
+    healthCheckPath: /index.html
+    envVars: {}
+
+# Notes:
+# - This manifest tells Render to create a static web service named `quizverse-static-site`
+#   using the `site-upload` branch from your repository. Render will serve the files from
+#   the repository root (staticPublishPath set to ".").
+# - To complete deployment you still need to connect this GitHub repository to your Render
+#   account and allow Render to access the repository. After linking the repo Render will
+#   create the service automatically from this manifest (or you can create it manually and
+#   Render will detect the manifest).

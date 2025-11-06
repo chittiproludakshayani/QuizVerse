@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizVerse - Question Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        .question-manager {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .question-form {
+            display: grid;
+            gap: 15px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 5px;
+        }
+
+        .options-group {
+            display: grid;
+            gap: 10px;
+        }
+
+        .hint-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .hint-fields {
+            display: grid;
+            gap: 10px;
+        }
+
+        .related-concepts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .concept-tag {
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .remove-concept {
+            cursor: pointer;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .question-list {
+            margin-top: 30px;
+        }
+
+        .question-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-btn, .delete-btn {
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .edit-btn {
+            background: #1e3c72;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        select, textarea, input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .submit-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h2>Question Management</h2>
+            <div class="header-actions">
+                <button onclick="showAddQuestionForm()" class="action-btn">Add New Question</button>
+                <button onclick="logout()" class="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <div class="question-manager">
+            <form id="questionForm" class="question-form" onsubmit="return saveQuestion(event)">
+                <div class="form-group">
+                    <label for="subject">Subject:</label>
+                    <select id="subject" required>
+                        <option value="">Select Subject</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Science">Science</option>
+                        <option value="English">English</option>
+                        <option value="History">History</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Biology">Biology</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="difficulty">Difficulty Level:</label>
+                    <select id="difficulty" required>
+                        <option value="">Select Difficulty</option>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="question">Question:</label>
+                    <textarea id="question" rows="3" required></textarea>
+                </div>
+
+                <div class="options-group">
+                    <label>Options:</label>
+                    <div class="form-group">
+                        <input type="text" id="option0" placeholder="Option 1" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="option1" placeholder="Option 2" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="option2" placeholder="Option 3" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="option3" placeholder="Option 4" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="correctAnswer">Correct Answer:</label>
+                    <select id="correctAnswer" required>
+                        <option value="">Select Correct Answer</option>
+                        <option value="0">Option 1</option>
+                        <option value="1">Option 2</option>
+                        <option value="2">Option 3</option>
+                        <option value="3">Option 4</option>
+                    </select>
+                </div>
+
+                <div class="hint-section">
+                    <h3>Hint Information</h3>
+                    <div class="hint-fields">
+                        <div class="form-group">
+                            <label for="hintTopic">Topic:</label>
+                            <input type="text" id="hintTopic" placeholder="Enter the topic" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="hintExplanation">Study Tip:</label>
+                            <textarea id="hintExplanation" rows="3" placeholder="Enter a helpful study tip (without giving away the answer)" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="newConcept">Related Concepts:</label>
+                            <div class="concept-input">
+                                <input type="text" id="newConcept" placeholder="Add a related concept">
+                                <button type="button" onclick="addConcept()">Add</button>
+                            </div>
+                            <div id="conceptsList" class="related-concepts">
+                                <!-- Concepts will be added here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Save Question</button>
+            </form>
+
+            <div class="question-list" id="questionList">
+                <!-- Questions will be listed here -->
+            </div>
+        </div>
+    </div>
+    <script src="js/auth.js"></script>
+    <script src="js/question-manager.js"></script>
+</body>
+</html>

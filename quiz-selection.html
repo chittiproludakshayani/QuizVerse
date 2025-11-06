@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizVerse - Quiz Selection</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modern-dashboard.css">
+    <style>
+        .difficulty-card {
+            text-align: center;
+            padding: 2.5rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .difficulty-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+
+        .difficulty-card.easy::before {
+            background: #4CAF50;
+        }
+
+        .difficulty-card.medium::before {
+            background: #FF9800;
+        }
+
+        .difficulty-card.hard::before {
+            background: #f44336;
+        }
+
+        .difficulty-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .difficulty-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .difficulty-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1e3c72;
+        }
+
+        .difficulty-description {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .start-quiz-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .easy .start-quiz-btn {
+            background: #4CAF50;
+        }
+
+        .medium .start-quiz-btn {
+            background: #FF9800;
+        }
+
+        .hard .start-quiz-btn {
+            background: #f44336;
+        }
+
+        .start-quiz-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="modern-header">
+        <div class="user-info">
+            <div class="user-avatar" id="userAvatar"></div>
+            <div>
+                <div class="welcome-header">Welcome to QuizVerse</div>
+                <div class="user-name" id="userName">Loading...</div>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button onclick="logout()" class="action-button">Logout</button>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stats-card">
+            <div class="stats-number" id="totalQuizzes">0</div>
+            <div class="stats-label">Quizzes Completed</div>
+        </div>
+        <div class="stats-card">
+            <div class="stats-number" id="avgScore">0%</div>
+            <div class="stats-label">Average Score</div>
+        </div>
+        <div class="stats-card">
+            <div class="stats-number" id="bestScore">0%</div>
+            <div class="stats-label">Best Score</div>
+        </div>
+    </div>
+
+    <div class="card-container">
+        <div class="difficulty-card easy">
+            <div class="difficulty-icon">🌟</div>
+            <h3 class="difficulty-title">Easy Mode</h3>
+            <p class="difficulty-description">Perfect for beginners! Build your confidence with fundamental questions and concepts.</p>
+            <a href="quiz.html?difficulty=easy" class="start-quiz-btn">Start Quiz</a>
+        </div>
+
+        <div class="difficulty-card medium">
+            <div class="difficulty-icon">⭐</div>
+            <h3 class="difficulty-title">Medium Mode</h3>
+            <p class="difficulty-description">Ready for a challenge? Test your knowledge with intermediate-level questions.</p>
+            <a href="quiz.html?difficulty=medium" class="start-quiz-btn">Start Quiz</a>
+        </div>
+
+        <div class="difficulty-card hard">
+            <div class="difficulty-icon">🏆</div>
+            <h3 class="difficulty-title">Hard Mode</h3>
+            <p class="difficulty-description">For the experts! Push your limits with our most challenging questions.</p>
+            <a href="quiz.html?difficulty=hard" class="start-quiz-btn">Start Quiz</a>
+        </div>
+    </div>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

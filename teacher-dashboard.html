@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizVerse - Teacher Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modern-dashboard.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1e3c72;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #1e3c72;
+        }
+
+        .card-description {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .results-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.2rem;
+        }
+
+        .results-table th {
+            background: #1e3c72;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .results-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="modern-header">
+        <div class="user-info">
+            <div class="user-avatar" id="userAvatar"></div>
+            <div>
+                <div class="welcome-header">Teacher Dashboard</div>
+                <div class="user-name" id="userName">Loading...</div>
+            </div>
+        </div>
+        <div class="header-actions">
+            <a href="question-manager.html" class="action-button">Manage Questions</a>
+            <button onclick="logout()" class="action-button">Logout</button>
+        </div>
+    </div>
+        <div class="search-container">
+            <input type="text" id="student-search" placeholder="Enter student username">
+            <button onclick="searchStudent()" class="search-btn">Search</button>
+        </div>
+        <div class="results-container">
+            <h3>Student Results</h3>
+            <div id="student-results" class="results-table">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+        <div class="leaderboard-container">
+            <h3>Leaderboard</h3>
+            <div id="leaderboard" class="leaderboard">
+                <!-- Leaderboard will be populated here -->
+            </div>
+        </div>
+    </div>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

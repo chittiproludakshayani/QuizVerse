@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizVerse - Quiz Results</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modern-dashboard.css">
+    <style>
+        .results-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .results-title {
+            font-size: 3rem;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .score-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #4CAF50, #1e3c72);
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+            position: relative;
+        }
+
+        .score-details {
+            font-size: 1.8rem;
+            color: #444;
+            margin: 2rem 0;
+        }
+
+        .score-label {
+            font-size: 1.4rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .performance-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .leaderboard-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        .leaderboard-title {
+            font-size: 2rem;
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .difficulty-section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .difficulty-header {
+            color: #1e3c72;
+            font-size: 1.6rem;
+            padding: 0.5rem 1rem;
+            margin: -0.5rem -0.5rem 1rem -0.5rem;
+            border-bottom: 2px solid #eee;
+            text-align: center;
+        }
+
+        .leaderboard-entry {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            font-size: 1.3rem;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .leaderboard-entry:hover {
+            transform: translateX(10px);
+            background: #f8f9fa;
+        }
+
+        .leaderboard-rank {
+            width: 40px;
+            height: 40px;
+            background: #1e3c72;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .username {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .user-type {
+            font-size: 1.5rem;
+            opacity: 0.7;
+        }
+
+        .score-info {
+            text-align: right;
+        }
+
+        .score-percentage {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .time-taken {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 0.2rem;
+        }
+
+        .current-user {
+            background: #e3f2fd;
+            border-radius: 8px;
+        }
+
+        .difficulty-section.hard .difficulty-header {
+            background: linear-gradient(45deg, #ff4757, #ff6b81);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .difficulty-section.medium .difficulty-header {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .difficulty-section.easy .difficulty-header {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .action-btn {
+            padding: 1.2rem 2.5rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .action-btn.primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: #757575;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="modern-header">
+        <div class="user-info">
+            <div class="user-avatar" id="userAvatar"></div>
+            <div>
+                <div class="welcome-header">Quiz Complete!</div>
+                <div class="user-name" id="userName">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-container">
+        <div class="results-header animate-in" style="animation-delay: 0.2s">
+            <h1 class="results-title">Your Results</h1>
+        </div>
+
+        <div class="score-card animate-in" style="animation-delay: 0.4s">
+            <div class="score-circle">
+                <span id="percentage">0</span>%
+            </div>
+            <div class="score-details">
+                <div class="score-label">Final Score</div>
+                <div><span id="score">0</span> out of <span id="total">0</span> correct</div>
+            </div>
+        </div>
+
+        <div class="performance-stats animate-in" style="animation-delay: 0.6s">
+            <div class="stat-card">
+                <div class="stat-value" id="timeSpent">0:00</div>
+                <div class="stat-label">Time Taken</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="accuracy">0%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="ranking">-</div>
+                <div class="stat-label">Your Ranking</div>
+            </div>
+        </div>
+
+        <div class="leaderboard-section animate-in" style="animation-delay: 0.8s">
+            <h2 class="leaderboard-title">Top Performers</h2>
+            <div id="leaderboard">
+                <!-- Leaderboard entries will be populated here -->
+            </div>
+        </div>
+
+        <div class="action-buttons animate-in" style="animation-delay: 1s">
+            <a href="quiz-selection.html" class="action-btn primary">Take Another Quiz</a>
+            <button onclick="logout()" class="action-btn secondary">Logout</button>
+        </div>
+    </div>
+
+    <div class="celebration" id="celebration"></div>
+    <script src="js/auth.js"></script>
+    <script src="js/results.js"></script>
+</body>
+</html>

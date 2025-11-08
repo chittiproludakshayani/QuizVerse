@@ -31,9 +31,7 @@ function displayResults() {
     if (accuracyElement) accuracyElement.textContent = `${percentage}%`;
 
     // Format time spent
-    const minutes = Math.floor(results.timeSpent / 60);
-    const seconds = results.timeSpent % 60;
-    if (timeSpentElement) timeSpentElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    if (timeSpentElement) timeSpentElement.textContent = formatTime(results.timeSpent);
 
     updateLeaderboard(results);
 }
@@ -121,9 +119,9 @@ function updateLeaderboard(currentResults) {
 }
 
 function formatTime(seconds) {
-    if (!seconds) return '--:--';
+    if (!seconds && seconds !== 0) return '--:--';
     const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
+    const secs = Math.floor(seconds % 60);
     return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 

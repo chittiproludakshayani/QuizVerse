@@ -111,12 +111,12 @@ function startQuizTimer() {
     const timerDisplay = document.getElementById('time');
     const duration = 1800; // 30 minutes
     currentQuiz.startTime = Date.now();
-    
+
     // Clear existing timer if any
     if (currentQuiz.timer) {
         clearInterval(currentQuiz.timer);
     }
-    
+
     // Add CSS for warning state
     const style = document.createElement('style');
     style.textContent = `
@@ -124,7 +124,7 @@ function startQuizTimer() {
             color: #ff4444;
             animation: pulse-warning 1s infinite;
         }
-        
+
         @keyframes pulse-warning {
             0% { opacity: 1; }
             50% { opacity: 0.5; }
@@ -132,27 +132,27 @@ function startQuizTimer() {
         }
     `;
     document.head.appendChild(style);
-    
+
     currentQuiz.timer = setInterval(function() {
         const elapsedTime = Math.floor((Date.now() - currentQuiz.startTime) / 1000);
         const remainingTime = duration - elapsedTime;
-        
+
         if (remainingTime <= 0) {
             clearInterval(currentQuiz.timer);
             timerDisplay.textContent = '00:00';
             submitQuiz();
             return;
         }
-        
+
         const minutes = Math.floor(remainingTime / 60);
         const seconds = remainingTime % 60;
-        
+
         // Update display with leading zeros
         timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-        
+
         // Store time spent for results
         currentQuiz.timeSpent = elapsedTime;
-        
+
         // Add warning class when less than 5 minutes remaining
         if (remainingTime <= 300) {
             timerDisplay.classList.add('warning');

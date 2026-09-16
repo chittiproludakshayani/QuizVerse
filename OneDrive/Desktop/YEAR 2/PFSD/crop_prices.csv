@@ -1,0 +1,12 @@
+# This CSV file will store the latest crop prices for the app.
+# Columns: name,price,unit,market
+Rice,25,per kg,Delhi
+Wheat,22,per kg,Punjab
+Cotton,60,per kg,Maharashtra
+Potato,15,per kg,Uttar Pradesh
+Corn,18,per kg,Karnataka
+Tomato,20,per kg,Andhra Pradesh
+Sugarcane,3,per kg,Uttar Pradesh
+Soybean,35,per kg,Madhya Pradesh
+Groundnut,80,per kg,Gujarat
+Millet,30,per kg,Rajasthan

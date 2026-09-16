@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Machine Learning Driven Crop Yield Prediction with NLP-Based Insight</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="settings-dropdown" style="position: absolute; top: 1em; right: 1em;">
+        <button class="settings-btn" onclick="toggleSettingsMenu()" aria-label="Accessibility and Settings">⚙️</button>
+        <div id="settingsMenu" class="settings-menu" style="display:none; position:absolute; right:0; background:#fff; border:1px solid #b0bec5; border-radius:8px; box-shadow:0 2px 8px rgba(24,90,157,0.10); padding:1em; z-index:100;">
+            <div style="margin-bottom:0.5em; font-weight:bold;">Accessibility</div>
+            <button class="font-size-btn" onclick="changeFontSize(1)">A+</button>
+            <button class="font-size-btn" onclick="changeFontSize(-1)">A-</button>
+            <button class="font-size-btn" onclick="toggleContrast()">Contrast</button>
+        </div>
+    </div>
+    <header>
+        <h1>Machine Learning Driven Crop Yield Prediction with NLP-Based Insight</h1>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/dashboard">Dashboard</a> |
+            <a href="/faq">FAQ & Help</a>
+        </nav>
+    </header>
+    <main>
+        <a href="/agroassist" style="display:inline-block;margin:16px 0;padding:10px 18px;background:#1976d2;color:#fff;border-radius:5px;text-decoration:none;font-weight:bold;">Try AgroAssist Chatbot</a>
+        <section>
+            <h2>Introduction</h2>
+            <p>This website demonstrates the use of machine learning for predicting crop yields and incorporating NLP-based insights from textual data such as farmer reports or weather descriptions.</p>
+        </section>
+        <section>
+            <h2>Features</h2>
+            <ul>
+                <li><a href="/dashboard">Dashboard & Analytics</a>: Visualize feedback and crop prediction trends.</li>
+                <li><a href="/predict">Crop Yield Prediction</a>: Input soil and weather data to find the best crop.</li>
+                <li><a href="/feedback">Farmer Feedback</a>: Submit feedback and reports from the field.</li>
+                <li><a href="/advisor">Smart Agriculture Advisor</a>: Analyze feedback and reports to get suggestions.</li>
+                <li><a href="/crop-doctor">Crop Doctor</a>: Upload plant images to diagnose diseases.</li>
+                <li><a href="/crop-prices">Crop Prices</a>: View current market prices for crops.</li>
+                <li><a href="/nlp">NLP-Based Insight</a>: Analyze text for insights.</li>
+                <li><a href="/faq">FAQ & Help</a>: Frequently asked questions and troubleshooting.</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Crop Yield Prediction Project</p>
+    </footer>
+    <script>
+    function changeFontSize(delta) {
+        const html = document.documentElement;
+        let size = parseFloat(window.getComputedStyle(html).fontSize);
+        size = Math.max(12, size + delta * 2);
+        html.style.fontSize = size + 'px';
+    }
+    function toggleContrast() {
+        document.body.classList.toggle('high-contrast');
+    }
+    function toggleSettingsMenu() {
+        const menu = document.getElementById('settingsMenu');
+        menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+    }
+    // Hide menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const menu = document.getElementById('settingsMenu');
+        const btn = document.querySelector('.settings-btn');
+        if (menu && btn && !menu.contains(event.target) && !btn.contains(event.target)) {
+            menu.style.display = 'none';
+        }
+    });
+    </script>
+</body>
+</html>

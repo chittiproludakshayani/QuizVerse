@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Price Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Crop Price Prediction</h1>
+        <p>Predict the price of a crop using regression ML based on market and crop type.</p>
+    </header>
+    <main>
+        <form method="post">
+            <label for="crop">Select Crop:</label>
+            <select id="crop" name="crop" required>
+                {% for crop in crops %}
+                <option value="{{ crop }}" {% if selected_crop == crop %}selected{% endif %}>{{ crop }}</option>
+                {% endfor %}
+            </select>
+            <label for="market">Market:</label>
+            <select id="market" name="market" required>
+                {% for market in markets %}
+                <option value="{{ market }}" {% if selected_market == market %}selected{% endif %}>{{ market }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Predict Price</button>
+        </form>
+        {% if predicted_price is not none %}
+        <section>
+            <h2>Predicted Price</h2>
+            <p>The predicted price for <strong>{{ selected_crop }}</strong> in <strong>{{ selected_market }}</strong> is: <span style="font-size:1.5em; color:green;">₹{{ predicted_price }}</span> per kg</p>
+        </section>
+        {% endif %}
+    </main>
+</body>
+</html>

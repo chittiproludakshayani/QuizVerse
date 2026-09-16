@@ -1,0 +1,7 @@
+Flask==2.3.3
+googletrans==4.0.2
+pandas
+joblib
+scikit-learn
+certifi
+pymongo

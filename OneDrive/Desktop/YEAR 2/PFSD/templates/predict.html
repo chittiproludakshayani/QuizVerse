@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Yield Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Crop Yield Prediction</h1>
+    </header>
+    <main>
+        <form method="post">
+            <label for="soil">Soil Type:</label>
+            <input type="text" id="soil" name="soil" placeholder="e.g. red soil, loamy, clay" required>
+            <label for="weather">Weather Conditions:</label>
+            <input type="text" id="weather" name="weather" placeholder="e.g. cool, humid, dry, rainy" required>
+            <button type="submit">Recommend Crop</button>
+        </form>
+        {% if best_crop %}
+        <h2>Recommended Crop</h2>
+        <p><strong>{{ best_crop }}</strong></p>
+        <h2>Potential Crops for Your Conditions</h2>
+        {% if matched_crops %}
+        <ul>
+            {% for crop in matched_crops %}
+            <li>
+                <strong>{{ crop.name }}</strong> — demand: {{ crop.demand }}, production: {{ crop.production }}
+                {% if loop.first %}<span> (Top recommendation)</span>{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No specific crops matched your soil and weather. Consider local testing and crop rotation.</p>
+        {% endif %}
+        <h2>Harvest Advice</h2>
+        <p>{{ harvest_advice }}</p>
+        {% endif %}
+    </main>
+    <footer>
+        <a href="/">Home</a> |
+        <a href="/download/predictions">Download Predictions Report (CSV)</a>
+    </footer>
+</body>
+</html>

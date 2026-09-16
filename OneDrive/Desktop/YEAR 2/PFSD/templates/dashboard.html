@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Crop Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Dashboard & Analytics</h1>
+        <nav>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Feedback Trends</h2>
+            <canvas id="feedbackChart" width="400" height="200"></canvas>
+        </section>
+        <section>
+            <h2>Crop Prediction Trends</h2>
+            <canvas id="cropChart" width="400" height="200"></canvas>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Crop Yield Prediction Project</p>
+    </footer>
+    <script>
+        // Feedback Trends Chart
+        const feedbackData = {{ feedback_data|tojson }};
+        const feedbackLabels = Object.keys(feedbackData);
+        const feedbackCounts = Object.values(feedbackData);
+        new Chart(document.getElementById('feedbackChart'), {
+            type: 'bar',
+            data: {
+                labels: feedbackLabels,
+                datasets: [{
+                    label: 'Feedback Count',
+                    data: feedbackCounts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {responsive: true, scales: {y: {beginAtZero: true}}}
+        });
+        // Crop Prediction Trends Chart
+        const cropData = {{ crop_data|tojson }};
+        const cropLabels = Object.keys(cropData);
+        const cropCounts = Object.values(cropData);
+        new Chart(document.getElementById('cropChart'), {
+            type: 'pie',
+            data: {
+                labels: cropLabels,
+                datasets: [{
+                    label: 'Predicted Crops',
+                    data: cropCounts,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                        'rgba(255, 159, 64, 0.5)'
+                    ]
+                }]
+            },
+            options: {responsive: true}
+        });
+    </script>
+</body>
+</html>

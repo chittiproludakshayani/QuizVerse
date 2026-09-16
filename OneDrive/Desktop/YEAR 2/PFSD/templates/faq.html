@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ & Help</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>FAQ & Help</h1>
+        <nav>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Frequently Asked Questions</h2>
+            <dl>
+                <dt>How do I use the Crop Yield Prediction?</dt>
+                <dd>Go to the "Crop Yield Prediction" page, enter your soil and weather details, and click "Recommend Crop" to get suggestions.</dd>
+                <dt>How can I submit feedback?</dt>
+                <dd>Visit the "Farmer Feedback" page, fill in the form, and submit your feedback. You can also use voice input if your browser supports it.</dd>
+                <dt>How do I download reports?</dt>
+                <dd>On the Feedback and Prediction pages, use the "Download Report" buttons to get CSV files of your data.</dd>
+                <dt>How do I change the website language?</dt>
+                <dd>Use the language dropdown on each page to select your preferred language.</dd>
+                <dt>Who can I contact for support?</dt>
+                <dd>For technical support, please use the feedback form or contact the site administrator.</dd>
+            </dl>
+        </section>
+        <section>
+            <h2>Help & Troubleshooting</h2>
+            <ul>
+                <li>If you have trouble with voice input, check your browser's microphone permissions.</li>
+                <li>For best experience, use the latest version of Chrome, Firefox, or Edge.</li>
+                <li>If you encounter errors, try refreshing the page or clearing your browser cache.</li>
+            </ul>
+        </section>
+        <section style="margin-top:2em;">
+            <h2>Ask a Question</h2>
+            <div id="faq-chat-box" style="background:#f4f4f4; border:1px solid #b0bec5; border-radius:8px; padding:1em; height:180px; overflow-y:auto; margin-bottom:0.5em;"></div>
+            <div style="display:flex; gap:0.5em;">
+                <input id="faq-chat-input" type="text" placeholder="Type your question..." style="flex:1; padding:0.5em; border-radius:6px; border:1px solid #b0bec5;">
+                <button id="faq-chat-send" style="padding:0.5em 1.2em; border-radius:6px; background:#185a9d; color:#fff; border:none;">Send</button>
+            </div>
+            <small style="color:#888;">This is a demo chat. For urgent help, use the feedback form.</small>
+        </section>
+    </main>
+    <footer>
+        <a href="/">Home</a>
+    </footer>
+    <script src="{{ url_for('static', filename='faq-chat.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Agriculture Advisor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Smart Agriculture Advisor</h1>
+    </header>
+    <main>
+        <form method="post">
+            <label for="report">{{ ui.enter_report }}</label>
+            <textarea id="report" name="report" required></textarea>
+            <label for="language">{{ ui.choose_language }}</label>
+            <select id="language" name="language">
+                <option value="en" {% if selected_language == 'en' %}selected{% endif %}>English</option>
+                <option value="hi" {% if selected_language == 'hi' %}selected{% endif %}>Hindi</option>
+                <option value="te" {% if selected_language == 'te' %}selected{% endif %}>Telugu</option>
+                <option value="ta" {% if selected_language == 'ta' %}selected{% endif %}>Tamil</option>
+                <option value="kn" {% if selected_language == 'kn' %}selected{% endif %}>Kannada</option>
+                <option value="ml" {% if selected_language == 'ml' %}selected{% endif %}>Malayalam</option>
+                <option value="bn" {% if selected_language == 'bn' %}selected{% endif %}>Bengali</option>
+            </select>
+            <button type="button" id="speechBtn">{{ ui.use_voice_input }}</button>
+            <button type="submit">{{ ui.get_suggestions }}</button>
+            <p class="hint">{{ ui.voice_hint }}</p>
+        </form>
+        {% if suggestions %}
+        <h2>{{ ui.suggestion_summary }}</h2>
+        <p id="suggestion-text">{{ suggestions }}</p>
+        <button type="button" id="readBtn">{{ ui.speak_suggestions }}</button>
+        {% endif %}
+        {% if previous_feedback %}
+        <h2>Recent Feedback Summary</h2>
+        <ul>
+            {% for item in previous_feedback %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </main>
+    <footer>
+        <a href="/">Home</a>
+    </footer>
+    <script>
+        const speechBtn = document.getElementById('speechBtn');
+        const readBtn = document.getElementById('readBtn');
+        const reportField = document.getElementById('report');
+        const languageSelect = document.getElementById('language');
+
+        function getSpeechLanguage() {
+            switch (languageSelect.value) {
+                case 'hi': return 'hi-IN';
+                case 'te': return 'te-IN';
+                case 'ta': return 'ta-IN';
+                case 'kn': return 'kn-IN';
+                case 'ml': return 'ml-IN';
+                case 'bn': return 'bn-IN';
+                default: return 'en-US';
+            }
+        }
+
+        if (speechBtn) {
+            speechBtn.addEventListener('click', () => {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognition) {
+                    alert('Speech recognition is not supported in this browser.');
+                    return;
+                }
+
+                const recognition = new SpeechRecognition();
+                recognition.lang = getSpeechLanguage();
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+                recognition.continuous = false;
+
+                recognition.onstart = () => {
+                    speechBtn.textContent = 'Listening...';
+                    speechBtn.disabled = true;
+                };
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    reportField.value = transcript;
+                };
+
+                recognition.onspeechend = () => {
+                    recognition.stop();
+                };
+
+                recognition.onend = () => {
+                    speechBtn.textContent = 'Use Voice Input';
+                    speechBtn.disabled = false;
+                    if (!reportField.value.trim()) {
+                        alert('No speech was captured. Please speak clearly or type your report.');
+                    }
+                };
+
+                recognition.onerror = (event) => {
+                    const errorMessage = event.error || 'unknown error';
+                    if (event.error === 'not-allowed' || event.error === 'permission-denied') {
+                        alert('Microphone access was denied. Please allow the microphone in your browser settings and try again.');
+                    } else if (event.error === 'aborted') {
+                        alert('Voice input was aborted. Please try again and speak clearly after pressing the button.');
+                    } else if (event.error === 'no-speech') {
+                        alert('No speech was detected. Please try again and speak louder or more clearly.');
+                    } else {
+                        alert('Voice input failed: ' + errorMessage + '. Please type your report instead.');
+                    }
+                    recognition.stop();
+                };
+
+                recognition.onnomatch = () => {
+                    alert('Voice was detected but not recognized. Please type your report instead.');
+                };
+
+                try {
+                    recognition.start();
+                } catch (error) {
+                    alert('Unable to start voice recognition: ' + (error.message || 'unknown error') + '.');
+                    speechBtn.textContent = 'Use Voice Input';
+                    speechBtn.disabled = false;
+                }
+            });
+        }
+
+        if (readBtn) {
+            readBtn.addEventListener('click', () => {
+                const suggestionText = document.getElementById('suggestion-text').innerText;
+                if (!suggestionText) {
+                    return;
+                }
+                if (!window.speechSynthesis) {
+                    alert('Speech synthesis is not supported in this browser.');
+                    return;
+                }
+                const utterance = new SpeechSynthesisUtterance(suggestionText);
+                utterance.lang = getSpeechLanguage();
+                window.speechSynthesis.speak(utterance);
+            });
+        }
+    </script>
+</body>
+</html>

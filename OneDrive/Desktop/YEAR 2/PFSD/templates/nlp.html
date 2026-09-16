@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP-Based Insight</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>NLP-Based Insight</h1>
+    </header>
+    <main>
+        <form method="post">
+            <label for="text">Enter Text for Analysis:</label>
+            <textarea id="text" name="text" required></textarea>
+            <button type="submit">Analyze</button>
+        </form>
+        {% if insight %}
+        <p>Insight: {{ insight }}</p>
+        {% endif %}
+    </main>
+    <footer>
+        <a href="/">Home</a>
+    </footer>
+</body>
+</html>

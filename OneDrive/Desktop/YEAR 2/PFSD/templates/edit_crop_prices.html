@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Crop Prices</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Edit Crop Prices</h1>
+    </header>
+    <main>
+        <form method="post">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Crop</th>
+                        <th>Price (₹)</th>
+                        <th>Unit</th>
+                        <th>Market</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for crop in prices %}
+                    <tr>
+                        <td><input type="text" name="name_{{ loop.index0 }}" value="{{ crop.name }}" required></td>
+                        <td><input type="number" name="price_{{ loop.index0 }}" value="{{ crop.price }}" step="0.01" required></td>
+                        <td><input type="text" name="unit_{{ loop.index0 }}" value="{{ crop.unit }}" required></td>
+                        <td><input type="text" name="market_{{ loop.index0 }}" value="{{ crop.market }}" required></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input type="hidden" name="count" value="{{ prices|length }}">
+            <button type="submit" style="margin-top:16px;">Save Changes</button>
+        </form>
+        <p><a href="/crop-prices">Back to Crop Prices</a></p>
+    </main>
+</body>
+</html>

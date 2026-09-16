@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroAssist Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .chatbox { max-width: 500px; margin: 40px auto; border: 1px solid #ccc; border-radius: 8px; padding: 16px; background: #fafafa; }
+        .chatlog { height: 300px; overflow-y: auto; background: #fff; border: 1px solid #eee; padding: 8px; margin-bottom: 12px; }
+        .user { color: #2e7d32; font-weight: bold; }
+        .bot { color: #1565c0; font-weight: bold; }
+        .msg { margin: 4px 0; }
+    </style>
+</head>
+<body>
+    <div class="chatbox">
+        <h2>AgroAssist Chatbot</h2>
+        <div class="chatlog" id="chatlog">
+            {% for entry in chatlog %}
+                <div class="msg"><span class="{{ entry.role }}">{{ entry.role|capitalize }}:</span> {{ entry.text }}</div>
+            {% endfor %}
+        </div>
+        <form method="post" autocomplete="off">
+            <input type="text" name="user_input" placeholder="Ask AgroAssist..." style="width:80%;padding:6px;" autofocus required>
+            <button type="submit">Send</button>
+        </form>
+        <p style="font-size:small;color:#888;">AgroAssist can answer questions about crops, prices, and farming advice.</p>
+        <a href="/">Back to Home</a>
+    </div>
+    <script>
+        var chatlog = document.getElementById('chatlog');
+        chatlog.scrollTop = chatlog.scrollHeight;
+    </script>
+</body>
+</html>
